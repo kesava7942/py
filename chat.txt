@@ -1,0 +1,49 @@
+import random
+
+patterns = {
+    "hello": ["Hello there!", "Hi!", "Greetings!"],
+    "how are you": ["I'm doing well, thanks for asking!", "I'm feeling great!"],
+    "what is your name": ["My name is Bard. How can I help you?"],
+    "bye": ["Goodbye!", "See you later!", "Have a great day!"],
+    # Add more patterns and responses here
+}
+
+def chatbot_response(user_input):
+    for pattern, responses in patterns.items():
+        if pattern in user_input.lower():
+            return random.choice(responses)
+    return "I'm sorry, I don't understand. Could you rephrase that?"
+
+def add_pattern_response(pattern, responses):
+    patterns[pattern] = responses
+
+def remove_pattern(pattern):
+    if pattern in patterns:
+        del patterns[pattern]
+        return True
+    return False
+
+# Example usage:
+while True:
+    user_input = input("You: ")
+
+    if user_input.lower() == 'exit':
+        print("Chatbot: Goodbye!")
+        break
+
+    response = chatbot_response(user_input)
+    print("Chatbot:", response)
+
+    # You can add or remove patterns dynamically
+    if user_input.lower() == 'add pattern':
+        pattern = input("Enter a new pattern: ")
+        responses = input("Enter responses, separated by commas: ").split(',')
+        add_pattern_response(pattern, responses)
+        print("Pattern added!")
+
+    elif user_input.lower() == 'remove pattern':
+        pattern_to_remove = input("Enter the pattern to remove: ")
+        if remove_pattern(pattern_to_remove):
+            print("Pattern removed!")
+        else:
+            print("Pattern not found.")
